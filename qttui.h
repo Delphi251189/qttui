@@ -3,6 +3,8 @@
 
 #include "qttui_global.h"
 
+#include <QLineEdit>
+
 class QTTUI_EXPORT QtTui
 {
 public:

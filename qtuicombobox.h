@@ -42,7 +42,7 @@ public:
         InsertBeforeCurrent,
         InsertAlphabetically
     };
-    Q_ENUM(InsertPolicy)
+    // Q_ENUM(InsertPolicy)
 
     InsertPolicy insertPolicy() const;
     void setInsertPolicy(InsertPolicy policy);

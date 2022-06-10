@@ -30,7 +30,7 @@ public:
         LeadingPosition,
         TrailingPosition
     };
-    Q_ENUM(ActionPosition)
+    // Q_ENUM(ActionPosition)
 
     explicit QTuiLineEdit(QTuiWidget *parent = Q_NULLPTR);
     explicit QTuiLineEdit(const QString &, QTuiWidget *parent = Q_NULLPTR);
@@ -53,7 +53,7 @@ public:
     bool isClearButtonEnabled() const;
 
     enum EchoMode { Normal, NoEcho, Password, PasswordEchoOnEdit };
-    Q_ENUM(EchoMode)
+    // Q_ENUM(EchoMode)
     EchoMode echoMode() const;
     void setEchoMode(EchoMode);
 

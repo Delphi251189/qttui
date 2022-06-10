@@ -1,5 +1,6 @@
 TEMPLATE        = app
-QT              -= gui
+QT              += gui widgets
+
 DEFINES         += QTTUI_LIBRARY
 CONFIG          += c++11
 
