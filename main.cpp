@@ -1,13 +1,16 @@
 
-#include <QCoreApplication>
+#include <QtCore>
 
+#include "qtuiapplication.h"
 #include "qtuilineedit.h"
 #include "qtuicombobox.h"
 
 
+
 int main(int argc, char** argv)
 {
-    QCoreApplication a(argc, argv);
+    QTuiApplication a(argc, argv);
+
 
 
     QTuiLineEdit le;
