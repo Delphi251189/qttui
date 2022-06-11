@@ -5,8 +5,24 @@ const quint32 CHANGED_MASK = 0x00000001 << 0;
 const quint32 VISIBLE_MASK = 0x00000001 << 1;
 const quint32 ENABLED_MASK = 0x00000001 << 2;
 
+struct QTuiWidgetPrivate
+{
+    QTuiWidgetPrivate()
+    {
 
-QTuiWidget::QTuiWidget(QTuiWidget *parent) : QObject(parent)
+    }
+
+    quint32             mask;
+    Qt::WindowFlags     windowFlags;
+    Qt::WindowModality  windowModality;
+    QRect               rect;
+    QSize               minimumSize;
+    QSize               maximumSize;
+    QTuiLayout          *layout;
+};
+
+
+QTuiWidget::QTuiWidget(QTuiWidget *parent) : QObject(parent), d(new QTuiWidgetPrivate)
 {
     setMaximumSize(QSize(1000,1000));
 
@@ -57,57 +73,57 @@ bool QTuiWidget::isWindow() const
 
 bool QTuiWidget::isModal() const
 {
-    return m_window_modality != Qt::NonModal;
+    return d->windowModality != Qt::NonModal;
 }
 
 const QRect &QTuiWidget::geometry() const
 {
-    return m_rect;
+    return d->rect;
 }
 
 int QTuiWidget::x() const
 {
-    return m_rect.x();
+    return d->rect.x();
 }
 
 int QTuiWidget::y() const
 {
-    return m_rect.y();
+    return d->rect.y();
 }
 
 QPoint QTuiWidget::pos() const
 {
-    return m_rect.topLeft();
+    return d->rect.topLeft();
 }
 
 QSize QTuiWidget::size() const
 {
-    return m_rect.size();
+    return d->rect.size();
 }
 
 int QTuiWidget::width() const
 {
-    return m_rect.width();
+    return d->rect.width();
 }
 
 int QTuiWidget::height() const
 {
-    return m_rect.height();
+    return d->rect.height();
 }
 
 QSize QTuiWidget::minimumSize() const
 {
-    return m_minimum_size;
+    return d->minimumSize;
 }
 
 QSize QTuiWidget::maximumSize() const
 {
-    return m_maximum_size;
+    return d->maximumSize;
 }
 
 void QTuiWidget::setMaximumSize(const QSize &s)
 {
-    m_maximum_size  = s;
+    d->maximumSize  = s;
 }
 
 QPoint QTuiWidget::mapToGlobal(const QPoint &pos) const
@@ -125,7 +141,7 @@ QPoint QTuiWidget::mapToGlobal(const QPoint &pos) const
 
 QPoint QTuiWidget::mapToParent(const QPoint &pos) const
 {
-    return pos + m_rect.topLeft();
+    return pos + d->rect.topLeft();
 }
 
 QPoint QTuiWidget::mapTo(const QTuiWidget *parent, const QPoint &pos) const
@@ -168,7 +184,7 @@ void QTuiWidget::move(int x, int y)
 void QTuiWidget::move(const QPoint &pos)
 {
     setAttribute(Qt::WA_Moved);
-    m_rect.moveTopLeft(pos);
+    d->rect.moveTopLeft(pos);
     setAttribute(Qt::WA_PendingMoveEvent);
 }
 
@@ -180,7 +196,7 @@ void QTuiWidget::resize(int w, int h)
 void QTuiWidget::resize(const QSize &s)
 {
     setAttribute(Qt::WA_Resized);
-    m_rect.setSize(s.boundedTo(maximumSize()).expandedTo(minimumSize()));
+    d->rect.setSize(s.boundedTo(maximumSize()).expandedTo(minimumSize()));
     setAttribute(Qt::WA_PendingResizeEvent);
 }
 
@@ -197,10 +213,15 @@ void QTuiWidget::setGeometry(const QRect &r)
     {
         // ?????
     }
-    m_rect.setTopLeft(r.topLeft());
-    m_rect.setSize(r.size().boundedTo(maximumSize()).expandedTo(minimumSize()));
+    d->rect.setTopLeft(r.topLeft());
+    d->rect.setSize(r.size().boundedTo(maximumSize()).expandedTo(minimumSize()));
     setAttribute(Qt::WA_PendingMoveEvent);
     setAttribute(Qt::WA_PendingResizeEvent);
+}
+
+QTuiLayout *QTuiWidget::layout() const
+{
+
 }
 
 void QTuiWidget::updateGeometry()
@@ -215,7 +236,7 @@ QTuiWidget *QTuiWidget::parentWidget() const
 
 Qt::WindowType QTuiWidget::windowType() const
 {
-    return static_cast<Qt::WindowType>(int(m_window_flags & Qt::WindowType_Mask));
+    return static_cast<Qt::WindowType>(int(d->windowFlags & Qt::WindowType_Mask));
 }
 
 QTuiWidget *QTuiWidget::childAt(const QPoint &p) const
@@ -282,7 +303,7 @@ void QTuiWidget::repaint(const QRect &)
 
 QRect QTuiWidget::rect() const
 {
-    return QRect( 0, 0, m_rect.width(), m_rect.height() );
+    return QRect( 0, 0, d->rect.width(), d->rect.height() );
 }
 
 void QTuiWidget::setAttribute(Qt::WidgetAttribute, bool on)
@@ -297,12 +318,12 @@ bool QTuiWidget::testAttribute(Qt::WidgetAttribute) const
 
 inline void QTuiWidget::setMaskFlag(quint32 mask, bool value)
 {
-    if(value) { m_mask |= mask; } else { m_mask &= (!mask); }
+    if(value) { d->mask |= mask; } else { d->mask &= (!mask); }
 }
 
 bool QTuiWidget::getMaskFlag(quint32 mask) const
 {
-    return m_mask & mask;
+    return d->mask & mask;
 }
 
 

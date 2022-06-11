@@ -5,7 +5,7 @@
 
 #include <ncurses.h>
 
-#include "qtuigroupbox.h"
+
 
 struct QTuiApplicationPrivate
 {
@@ -27,6 +27,7 @@ QTuiApplication::QTuiApplication(int &argc, char **argv)
     :QCoreApplication(argc, argv), d(new QTuiApplicationPrivate)
 {
 
+
     installEventFilter(new QTuiEventFilter);
     QTuiConsoleReader *reader = new QTuiConsoleReader();
     connect (reader, SIGNAL (keyPressed(char)), this, SLOT(onConsoleKeyPressed(char)));
@@ -37,26 +38,7 @@ QTuiApplication::QTuiApplication(int &argc, char **argv)
     wclear(d->window);
     werase(d->window);
     wrefresh(d->window);
-
-    QTuiGroupBox *gb = new QTuiGroupBox;
-    gb->setCheckable(true);
-    //gb->setChecked(false);
-    gb->setGeometry(QRect(QPoint(10,6),QSize(32, 12)));
-    gb->setTitle("Eng Рус Հայ");
-
-    QTuiPainter painter;
-    painter.begin();
-
-    painter.drawWindow(QRect(QPoint(2,3), QSize(48, 18)), "Hellow TUI");
-
-//    painter.drawRect(QRect(QPoint(3,2),QSize(20, 8)));
-//    painter.drawText(QPoint(5,5), "Eng Рус Հայ");
-
-    painter.drawGroupBox(gb);
-
-    painter.end();
-
-
+    new QTuiPainter;
 }
 
 QTuiApplication::~QTuiApplication()

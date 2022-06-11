@@ -9,22 +9,30 @@ LIBS            += -lncursesw
 SOURCES         += qttui.cpp \
     main.cpp \
     qtuiapplication.cpp \
+    qtuiboxlayout.cpp \
+    qtuibrush.cpp \
     qtuicombobox.cpp \
     qtuiconsolereader.cpp \
     qtuieventfilter.cpp \
     qtuigroupbox.cpp \
+    qtuilayout.cpp \
     qtuilineedit.cpp \
     qtuipainter.cpp \
+    qtuipen.cpp \
     qtuislider.cpp \
     qtuiwidget.cpp
 HEADERS         += qttui_global.h qttui.h \
     qtuiapplication.h \
+    qtuiboxlayout.h \
+    qtuibrush.h \
     qtuicombobox.h \
     qtuiconsolereader.h \
     qtuieventfilter.h \
     qtuigroupbox.h \
+    qtuilayout.h \
     qtuilineedit.h \
     qtuipainter.h \
+    qtuipen.h \
     qtuislider.h \
     qtuiwidget.h
 

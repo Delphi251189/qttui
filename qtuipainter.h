@@ -9,6 +9,7 @@ class QTuiComboBox;
 class QTuiGroupBox;
 class QTuiLineEdit;
 class QTuiWidget;
+class QTuiPen;
 
 class QTuiPainter
 {
@@ -17,11 +18,12 @@ public:
     QTuiPainter();
     ~QTuiPainter();
 
+    static QTuiPainter *instance();
+
     bool begin();
     bool end();
     bool isActive() const;
-    void setPen(const QColor &color);
-    void setPen(const QPen &pen);
+    void setPen(const QTuiPen &pen);
     void setPen(Qt::PenStyle style);
     const QPen &pen() const;
     void setBrush(const QBrush &brush);
@@ -30,11 +32,18 @@ public:
 
     // Primitives drawing functions
     void drawHorizontalLine(const QPoint &p1, const QPoint &p2);
+    void drawDoubleHorizontalLine(const QPoint &p1, const QPoint &p2);
     void drawVerticalLine(const QPoint &p1, const QPoint &p2);
+    void drawDoubleVerticalLine(const QPoint &p1, const QPoint &p2);
     void drawRect(const QRect &rect);
+    void drawDoubleRect(const QRect &rect);
+
     void drawText(const QPoint &p, const QString &s);
     void drawText(const QPoint &p1, const QPoint &p2, const QString &s);
+
+
     void drawWindow(const QRect &geom, const QString &title);
+    void drawPopup(const QRect &geom);
 
     // Widgets drawing functions
     void drawWidget(QTuiWidget *w);

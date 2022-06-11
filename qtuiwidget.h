@@ -6,6 +6,10 @@
 #include <QRect>
 #include <QVariant>
 
+class QTuiLayout;
+
+struct  QTuiWidgetPrivate;
+
 class QTuiWidget : public QObject
 {
     Q_OBJECT
@@ -107,7 +111,7 @@ public:
     bool isVisibleTo(const QTuiWidget *) const;
     inline bool isHidden() const;
 public:
-//    QLayout *layout() const;
+    QTuiLayout *layout() const;
 //    void setLayout(QLayout *);
     void updateGeometry();
     void setParent(QTuiWidget *parent);
@@ -176,14 +180,7 @@ protected:
     void setMaskFlag(quint32 mask, bool value);
     bool getMaskFlag(quint32 mask) const;
 private:
-    quint32             m_mask;
-    Qt::WindowFlags     m_window_flags;
-    Qt::WindowModality  m_window_modality;
-
-    QRect               m_rect;
-    QSize               m_minimum_size;
-    QSize               m_maximum_size;
-
+    QTuiWidgetPrivate   *d;
 };
 
 
