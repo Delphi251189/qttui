@@ -5,6 +5,8 @@
 
 #include <ncurses.h>
 
+#include "qtuigroupbox.h"
+
 struct QTuiApplicationPrivate
 {
     QTuiApplicationPrivate()
@@ -36,13 +38,21 @@ QTuiApplication::QTuiApplication(int &argc, char **argv)
     werase(d->window);
     wrefresh(d->window);
 
+    QTuiGroupBox *gb = new QTuiGroupBox;
+    gb->setCheckable(true);
+    //gb->setChecked(false);
+    gb->setGeometry(QRect(QPoint(10,6),QSize(32, 12)));
+    gb->setTitle("Eng Рус Հայ");
 
     QTuiPainter painter;
     painter.begin();
 
-    painter.drawRect(QRect(QPoint(3,2),QSize(20, 8)));
+    painter.drawWindow(QRect(QPoint(2,3), QSize(48, 18)), "Hellow TUI");
 
-    painter.drawText(QPoint(5,5), "Eng Рус Հայ");
+//    painter.drawRect(QRect(QPoint(3,2),QSize(20, 8)));
+//    painter.drawText(QPoint(5,5), "Eng Рус Հայ");
+
+    painter.drawGroupBox(gb);
 
     painter.end();
 

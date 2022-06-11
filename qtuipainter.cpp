@@ -3,6 +3,11 @@
 
 #include <ncurses.h>
 
+#include "qtuiwidget.h"
+#include "qtuigroupbox.h"
+#include "qtuicombobox.h"
+#include "qtuilineedit.h"
+
 struct QTuiPainterPrivate
 {
     QTuiPainterPrivate() : window(Q_NULLPTR)
@@ -37,12 +42,8 @@ bool QTuiPainter::end()
 
 //    attroff(COLOR_PAIR(1));
     refresh();
+    curs_set(0);
     return true;
-}
-
-void QTuiPainter::drawHorizontalLine(int x1, int y1, int x2, int y2)
-{
-    drawHorizontalLine(QPoint(x1,y1), QPoint(x2,y2));
 }
 
 void QTuiPainter::drawHorizontalLine(const QPoint &p1, const QPoint &p2)
@@ -59,10 +60,6 @@ void QTuiPainter::drawHorizontalLine(const QPoint &p1, const QPoint &p2)
     }
 }
 
-void QTuiPainter::drawVerticalLine(int x1, int y1, int x2, int y2)
-{
-    drawVerticalLine(QPoint(x1, y1), QPoint(x2, y2));
-}
 
 void QTuiPainter::drawVerticalLine(const QPoint &p1, const QPoint &p2)
 {
@@ -82,10 +79,6 @@ void QTuiPainter::drawVerticalLine(const QPoint &p1, const QPoint &p2)
 
 }
 
-void QTuiPainter::drawRect(int x1, int y1, int w, int h)
-{
-    drawRect(QRect(x1, y1, w, h));
-}
 
 void QTuiPainter::drawRect(const QRect &rect)
 {
@@ -119,4 +112,37 @@ void QTuiPainter::drawText(const QPoint &p, const QString &s)
 {
     move(p.y(), p.x());
     addstr(s.toUtf8().constData());
+}
+
+void QTuiPainter::drawText(const QPoint &p1, const QPoint &p2, const QString &s)
+{
+    drawText((p1.x() < p2.x())?p1:p2, s.mid(0, qAbs(p1.x()-p2.x())));
+}
+
+void QTuiPainter::drawWindow(const QRect &geom, const QString &title)
+{
+    drawRect(geom);
+    QRect r2 = geom.marginsRemoved(QMargins(0,0,0,geom.height()-3));
+    drawHorizontalLine(r2.bottomLeft(), r2.bottomRight());
+    drawText(r2.topLeft() + QPoint(0,2), "├");
+    drawText(r2.topRight() - QPoint(0,-2), "┤");
+    drawText( r2.topLeft() + QPoint(3,1), r2.topRight() - QPoint(6,1), title);
+    drawText(r2.topRight()  - QPoint(5,-1), "_ ☐ X" );
+}
+
+void QTuiPainter::drawComboBox(QTuiComboBox *cb)
+{
+
+}
+
+void QTuiPainter::drawGroupBox(QTuiGroupBox *gb)
+{
+    QRect geom = gb->geometry();
+    drawRect(geom);
+    geom = geom.marginsRemoved(QMargins(gb->isCheckable() ? 4 : 2, 0, 2, 0));
+    drawText(geom.topLeft(), geom.topRight(), gb->title());
+    if(gb->isCheckable())
+    {
+        drawText(geom.topLeft()- QPoint(2,0),  gb->isChecked()? "▣ " : "☐ " );
+    }
 }

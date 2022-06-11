@@ -12,15 +12,19 @@ SOURCES         += qttui.cpp \
     qtuicombobox.cpp \
     qtuiconsolereader.cpp \
     qtuieventfilter.cpp \
+    qtuigroupbox.cpp \
     qtuilineedit.cpp \
     qtuipainter.cpp \
+    qtuislider.cpp \
     qtuiwidget.cpp
 HEADERS         += qttui_global.h qttui.h \
     qtuiapplication.h \
     qtuicombobox.h \
     qtuiconsolereader.h \
     qtuieventfilter.h \
+    qtuigroupbox.h \
     qtuilineedit.h \
     qtuipainter.h \
+    qtuislider.h \
     qtuiwidget.h
 

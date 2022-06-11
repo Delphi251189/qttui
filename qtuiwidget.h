@@ -63,7 +63,7 @@ public:
 
     void setMinimumSize(const QSize &);
     void setMinimumSize(int minw, int minh);
-    void setMaximumSize(const QSize &);
+    void setMaximumSize(const QSize &s);
     void setMaximumSize(int maxw, int maxh);
     void setMinimumWidth(int minw);
     void setMinimumHeight(int minh);
@@ -111,8 +111,8 @@ public:
 //    void setLayout(QLayout *);
     void updateGeometry();
     void setParent(QTuiWidget *parent);
-    void scroll(int dx, int dy);
-    void scroll(int dx, int dy, const QRect&);
+//    void scroll(int dx, int dy);
+//    void scroll(int dx, int dy, const QRect&);
     QTuiWidget *focusWidget() const;
     QTuiWidget *nextInFocusChain() const;
     QTuiWidget *previousInFocusChain() const;

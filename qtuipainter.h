@@ -5,6 +5,11 @@
 
 struct QTuiPainterPrivate;
 
+class QTuiComboBox;
+class QTuiGroupBox;
+class QTuiLineEdit;
+class QTuiWidget;
+
 class QTuiPainter
 {
     Q_GADGET
@@ -23,18 +28,19 @@ public:
     void setBrush(Qt::BrushStyle style);
     const QBrush &brush() const;
 
-    // drawing functions
-    void drawHorizontalLine(int x1, int y1, int x2, int y2);
+    // Primitives drawing functions
     void drawHorizontalLine(const QPoint &p1, const QPoint &p2);
-
-
-    void drawVerticalLine(int x1, int y1, int x2, int y2);
     void drawVerticalLine(const QPoint &p1, const QPoint &p2);
-
-    void drawRect(int x1, int y1, int w, int h);
     void drawRect(const QRect &rect);
-
     void drawText(const QPoint &p, const QString &s);
+    void drawText(const QPoint &p1, const QPoint &p2, const QString &s);
+    void drawWindow(const QRect &geom, const QString &title);
+
+    // Widgets drawing functions
+    void drawWidget(QTuiWidget *w);
+    void drawLineEdit(QTuiLineEdit *le);
+    void drawComboBox(QTuiComboBox *cb);
+    void drawGroupBox(QTuiGroupBox *gb);
 
 
 

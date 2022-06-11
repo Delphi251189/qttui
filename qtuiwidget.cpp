@@ -8,6 +8,7 @@ const quint32 ENABLED_MASK = 0x00000001 << 2;
 
 QTuiWidget::QTuiWidget(QTuiWidget *parent) : QObject(parent)
 {
+    setMaximumSize(QSize(1000,1000));
 
 }
 
@@ -104,6 +105,11 @@ QSize QTuiWidget::maximumSize() const
     return m_maximum_size;
 }
 
+void QTuiWidget::setMaximumSize(const QSize &s)
+{
+    m_maximum_size  = s;
+}
+
 QPoint QTuiWidget::mapToGlobal(const QPoint &pos) const
 {
     QPoint result = pos;
@@ -189,12 +195,17 @@ void QTuiWidget::setGeometry(const QRect &r)
     setAttribute(Qt::WA_Moved);
     if (isWindow())
     {
-        //?????
+        // ?????
     }
     m_rect.setTopLeft(r.topLeft());
     m_rect.setSize(r.size().boundedTo(maximumSize()).expandedTo(minimumSize()));
     setAttribute(Qt::WA_PendingMoveEvent);
     setAttribute(Qt::WA_PendingResizeEvent);
+}
+
+void QTuiWidget::updateGeometry()
+{
+//    Q_UNIMPLEMENTED();
 }
 
 QTuiWidget *QTuiWidget::parentWidget() const
@@ -224,6 +235,11 @@ bool QTuiWidget::isAncestorOf(const QTuiWidget *child) const
     return false;
 }
 
+void QTuiWidget::setFocusPolicy(Qt::FocusPolicy policy)
+{
+    //Q_UNIMPLEMENTED();
+}
+
 bool QTuiWidget::hasFocus() const
 {
     const QTuiWidget* w = this;
@@ -240,7 +256,7 @@ bool QTuiWidget::hasFocus() const
 #endif // QT_CONFIG(graphicsview)
     return (QApplication::focusWidget() == w);
 */
-    Q_UNIMPLEMENTED();
+    //Q_UNIMPLEMENTED();
     return false;
 }
 
@@ -256,12 +272,12 @@ void QTuiWidget::repaint()
 
 void QTuiWidget::update(const QRect &)
 {
-    Q_UNIMPLEMENTED();
+    //Q_UNIMPLEMENTED();
 }
 
 void QTuiWidget::repaint(const QRect &)
 {
-    Q_UNIMPLEMENTED();
+    //Q_UNIMPLEMENTED();
 }
 
 QRect QTuiWidget::rect() const
