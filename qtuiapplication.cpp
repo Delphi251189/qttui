@@ -19,6 +19,7 @@ struct QTuiApplicationPrivate
 
 
     WINDOW *window;
+    QTuiWidget focusWidget;
 };
 
 
@@ -55,6 +56,21 @@ int QTuiApplication::terminalWidth()
 int QTuiApplication::terminalHeight()
 {
     return getmaxy(d->window);
+}
+
+QTuiWidget *QTuiApplication::focusWidget()
+{
+    return Q_NULLPTR;
+}
+
+void QTuiApplication::closeAllWindows()
+{
+
+}
+
+void QTuiApplication::aboutQt()
+{
+
 }
 
 void QTuiApplication::onConsoleKeyPressed(char ch)

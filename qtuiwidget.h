@@ -183,5 +183,7 @@ private:
     QTuiWidgetPrivate   *d;
 };
 
+typedef QList<QTuiWidget*> QTuiWidgetList;
+
 
 #endif // QTUIWIDGET_H

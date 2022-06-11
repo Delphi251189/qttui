@@ -1,4 +1,8 @@
 #include "qtuiconsolereader.h"
+#include "qtuievent.h"
+#include "qtuiwidget.h"
+#include "qtuiapplication.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <termios.h>
@@ -36,6 +40,9 @@ void QTuiConsoleReader::run()
     forever
     {
         char key = getchar();
-        emit keyPressed(key);
+        QTuiWidget *widget = qApp->focusWidget();
+        qApp->postEvent(widget, new QTuiKeyEvent(QEvent::KeyPress, key, Qt::NoModifier, QString(QChar(key))));
+        qApp->postEvent(widget, new QTuiKeyEvent(QEvent::KeyRelease, key, Qt::NoModifier, QString(QChar(key))));
+
     }
 }

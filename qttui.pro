@@ -13,6 +13,7 @@ SOURCES         += qttui.cpp \
     qtuibrush.cpp \
     qtuicombobox.cpp \
     qtuiconsolereader.cpp \
+    qtuievent.cpp \
     qtuieventfilter.cpp \
     qtuigroupbox.cpp \
     qtuilayout.cpp \
@@ -27,6 +28,7 @@ HEADERS         += qttui_global.h qttui.h \
     qtuibrush.h \
     qtuicombobox.h \
     qtuiconsolereader.h \
+    qtuievent.h \
     qtuieventfilter.h \
     qtuigroupbox.h \
     qtuilayout.h \
