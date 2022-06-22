@@ -20,6 +20,10 @@ public:
 
     static QTuiPainter *instance();
 
+    int terminalWidth();
+    int terminalHeight();
+
+
     bool begin();
     bool end();
     bool isActive() const;
@@ -37,6 +41,8 @@ public:
     void drawDoubleVerticalLine(const QPoint &p1, const QPoint &p2);
     void drawRect(const QRect &rect);
     void drawDoubleRect(const QRect &rect);
+
+    void fillRect(const QRect &rect, Qt::GlobalColor color);
 
     void drawText(const QPoint &p, const QString &s);
     void drawText(const QPoint &p1, const QPoint &p2, const QString &s);

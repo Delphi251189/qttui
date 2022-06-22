@@ -21,7 +21,6 @@ struct QTuiLayoutPrivate
 
 QTuiLayout::QTuiLayout(QTuiWidget *parent) : QObject(parent), d(new QTuiLayoutPrivate)
 {
-
 }
 
 int QTuiLayout::margin() const

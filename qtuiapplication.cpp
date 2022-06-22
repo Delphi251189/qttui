@@ -3,14 +3,10 @@
 #include "qtuieventfilter.h"
 #include "qtuiconsolereader.h"
 
-#include <ncurses.h>
-
-
 
 struct QTuiApplicationPrivate
 {
-    QTuiApplicationPrivate()
-        : window(Q_NULLPTR)
+    QTuiApplicationPrivate() :focusWidget(Q_NULLPTR)
     {
 
     }
@@ -18,7 +14,6 @@ struct QTuiApplicationPrivate
 
 
 
-    WINDOW *window;
     QTuiWidget focusWidget;
 };
 
@@ -34,11 +29,6 @@ QTuiApplication::QTuiApplication(int &argc, char **argv)
     connect (reader, SIGNAL (keyPressed(char)), this, SLOT(onConsoleKeyPressed(char)));
     reader->start();
 
-    setlocale(LC_CTYPE, "");
-    d->window = initscr();
-    wclear(d->window);
-    werase(d->window);
-    wrefresh(d->window);
     new QTuiPainter;
 }
 
@@ -49,13 +39,13 @@ QTuiApplication::~QTuiApplication()
 
 int QTuiApplication::terminalWidth()
 {
-    return getmaxx(d->window);
+    return QTuiPainter::instance()->terminalWidth();
 
 }
 
 int QTuiApplication::terminalHeight()
 {
-    return getmaxy(d->window);
+    return QTuiPainter::instance()->terminalHeight();
 }
 
 QTuiWidget *QTuiApplication::focusWidget()

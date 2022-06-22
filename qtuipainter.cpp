@@ -15,9 +15,61 @@ struct QTuiPainterPrivate
 {
     QTuiPainterPrivate() : window(Q_NULLPTR)
     {
+
+        setlocale(LC_CTYPE, "");
+        window = initscr();
+
+
+        if (has_colors())
+        {
+            start_color();
+        }
+        wclear(window);
+        werase(window);
+        wrefresh(window);
+
     }
 
+    NCURSES_COLOR_T qtColorToNcursesColor(Qt::GlobalColor color)
+    {
 
+        switch (color)
+        {
+            case Qt::white:
+                return COLOR_WHITE;
+
+            case Qt::red:
+            case Qt::darkRed:
+                return COLOR_RED;
+
+            case Qt::green:
+            case Qt::darkGreen:
+                return COLOR_GREEN;
+
+            case Qt::blue:
+            case Qt::darkBlue:
+                return COLOR_BLUE;
+
+            case Qt::cyan:
+            case Qt::darkCyan:
+                return COLOR_CYAN;
+
+            case Qt::magenta:
+            case Qt::darkMagenta:
+                return COLOR_MAGENTA;
+
+            case Qt::darkYellow:
+            case Qt::yellow:
+                return COLOR_YELLOW;
+        case Qt::black:
+        case Qt::lightGray:
+        case Qt::gray:
+        case Qt::darkGray:
+        default:
+            return COLOR_BLACK;
+            break;
+        }
+    }
 
     WINDOW  *window;
     QTuiPen pen;
@@ -25,7 +77,9 @@ struct QTuiPainterPrivate
 };
 QTuiPainter::QTuiPainter() : d(new QTuiPainterPrivate)
 {
-
+//    begin();
+//    fillRect(QRect(0, 0, terminalWidth(), terminalHeight()), Qt::yellow);
+//    end();
 }
 
 QTuiPainter::~QTuiPainter()
@@ -36,6 +90,16 @@ QTuiPainter::~QTuiPainter()
 QTuiPainter *QTuiPainter::instance()
 {
     return g_painter;
+}
+
+int QTuiPainter::terminalWidth()
+{
+    getmaxx(d->window);
+}
+
+int QTuiPainter::terminalHeight()
+{
+    return getmaxy(d->window);
 }
 
 bool QTuiPainter::begin()
@@ -91,7 +155,6 @@ void QTuiPainter::drawDoubleHorizontalLine(const QPoint &p1, const QPoint &p2)
 
 }
 
-
 void QTuiPainter::drawVerticalLine(const QPoint &p1, const QPoint &p2)
 {
 
@@ -122,7 +185,6 @@ void QTuiPainter::drawDoubleVerticalLine(const QPoint &p1, const QPoint &p2)
         addstr(str);
     }
 }
-
 
 void QTuiPainter::drawRect(const QRect &rect)
 {
@@ -172,6 +234,23 @@ void QTuiPainter::drawDoubleRect(const QRect &rect)
     addstr("╚");
     move(rect.bottomRight().y(), rect.bottomRight().x());
     addstr("╝");
+
+}
+
+void QTuiPainter::fillRect(const QRect &rect, Qt::GlobalColor color)
+{
+
+    init_pair(1, COLOR_WHITE, d->qtColorToNcursesColor(color));
+    attron(COLOR_PAIR(1));
+    for(int i = rect.topLeft().x(); i < rect.topLeft().x() + rect.width(); ++i)
+    {
+        for(int j = rect.topLeft().y(); j < rect.topLeft().y() + rect.height(); ++j)
+        {
+            move(j, i);
+            addstr(" ");
+        }
+    }
+    attroff(COLOR_PAIR(1));
 
 }
 

@@ -41,9 +41,15 @@ int main(int argc, char** argv)
 
     QTuiPainter *painter = QTuiPainter::instance();
     painter->begin();
+
+    //painter->fillRect(QRect(1, 1, painter->terminalWidth(), painter->terminalHeight()), Qt::yellow);
+
     painter->drawWindow(QRect(QPoint(2,3), QSize(64, 18)), "Hellow TUI");
     painter->drawGroupBox(gb);
     painter->drawComboBox(cb);
+
+
+
     painter->end();
 
 
